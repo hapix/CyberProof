@@ -6,8 +6,6 @@
 
 ### Automated W3C PROV-Backed Cyber Insurance Evidence Generation for Splunk SOAR
 
-> **Splunk Agentic Ops Hackathon 2026 — Security Track**
-> Bonus category: Best Use of Splunk MCP Server
 
 ---
 
