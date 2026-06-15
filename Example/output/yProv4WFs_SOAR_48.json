@@ -1,0 +1,213 @@
+{
+    "prefix": {
+        "default": "http://anotherexample.org/",
+        "yprov4wfs": "http://example.org"
+    },
+    "activity": {
+        "soar_playbook_run_57": {
+            "prov:startTime": "2026-06-15 13:53:34.380476",
+            "prov:endTime": "2026-06-15 13:54:18.906645",
+            "prov:label": "Playbook Run 57",
+            "prov:type": "prov:Activity",
+            "yprov4wfs:status": "success",
+            "yprov4wfs:level": "1",
+            "yprov4wfs:playbook_id": "174",
+            "yprov4wfs:playbook_run_id": "57",
+            "yprov4wfs:container_id": "48"
+        },
+        "soar_action_run_31": {
+            "prov:startTime": "2026-06-15 13:53:36.981000",
+            "prov:endTime": "2026-06-15 13:53:49.400000",
+            "prov:label": "detect_initial_compromise",
+            "prov:type": "prov:Activity",
+            "yprov4wfs:status": "success",
+            "yprov4wfs:level": "2",
+            "yprov4wfs:action_id": "31",
+            "yprov4wfs:action_name": "detect_initial_compromise",
+            "yprov4wfs:action_type": "run query",
+            "yprov4wfs:playbook_run_id": "57",
+            "yprov4wfs:container_id": "48",
+            "yprov4wfs:node_guid": "c6de967b-584c-4ee4-a61a-48b6cbcd23f5"
+        },
+        "soar_action_run_32": {
+            "prov:startTime": "2026-06-15 13:53:50.083000",
+            "prov:endTime": "2026-06-15 13:54:01.097000",
+            "prov:label": "detect_c2_communication",
+            "prov:type": "prov:Activity",
+            "yprov4wfs:status": "success",
+            "yprov4wfs:level": "2",
+            "yprov4wfs:action_id": "32",
+            "yprov4wfs:action_name": "detect_c2_communication",
+            "yprov4wfs:action_type": "run query",
+            "yprov4wfs:playbook_run_id": "57",
+            "yprov4wfs:container_id": "48",
+            "yprov4wfs:node_guid": "c6de967b-584c-4ee4-a61a-48b6cbcd23f5"
+        },
+        "soar_action_run_33": {
+            "prov:startTime": "2026-06-15 13:54:03.593000",
+            "prov:endTime": "2026-06-15 13:54:16.525000",
+            "prov:label": "detect_backdoor_account",
+            "prov:type": "prov:Activity",
+            "yprov4wfs:status": "success",
+            "yprov4wfs:level": "2",
+            "yprov4wfs:action_id": "33",
+            "yprov4wfs:action_name": "detect_backdoor_account",
+            "yprov4wfs:action_type": "run query",
+            "yprov4wfs:playbook_run_id": "57",
+            "yprov4wfs:container_id": "48",
+            "yprov4wfs:node_guid": "c6de967b-584c-4ee4-a61a-48b6cbcd23f5"
+        }
+    },
+    "entity": {
+        "soar_action_input_31": {
+            "prov:label": "Action 31 Input",
+            "prov:type": "prov:Entity",
+            "yprov4wfs:action": "run query",
+            "yprov4wfs:type": "investigate"
+        },
+        "soar_app_run_result_31": {
+            "prov:label": "Action 31 App Result",
+            "prov:type": "prov:Entity",
+            "yprov4wfs:result_summary": "'detect_initial_compromise' on asset 'splunk': 1 action succeeded. (1)For Parameter: {\"add_raw_field\":true,\"attach_result\":false,\"command\":\"search\",\"context\":{\"artifact_id\":0,\"guid\":\"0da8199a-4ea4-4550-bedf-17146b58972c\",\"parent_action_run\":[]},\"display\":\"_time,Image,CommandLine\",\"end_time\":\"\",\"parse_only\":false,\"query\":\"index=botsv3 earliest=0 sourcetype=xmlwineventlog | rex field=_raw \\\"<EventID>(?P<EventID>\\\\d+)</EventID>\\\" | rex field=_raw \\\"<Data Name='Image'>(?P<Image>[^<]+)</Data>\\\" | rex field=_raw \\\"<Data Name='CommandLine'>(?P<CommandLine>[^<]+)</Data>\\\" | where EventID=\\\"1\\\" AND (like(Image, \\\"%hdoor%\\\") OR like(Image, \\\"%iexeplorer%\\\")) | table _time Image CommandLine | sort _time | head 10\",\"search_mode\":\"smart\",\"start_time\":\"\",\"time_format\":\"\"} Message: \"Sid: 1781531622.56, Total events: 10\""
+        },
+        "soar_action_message_31": {
+            "prov:label": "Action 31 Message",
+            "prov:type": "prov:Entity",
+            "yprov4wfs:message": "1 action succeeded"
+        },
+        "soar_action_input_32": {
+            "prov:label": "Action 32 Input",
+            "prov:type": "prov:Entity",
+            "yprov4wfs:action": "run query",
+            "yprov4wfs:type": "investigate"
+        },
+        "soar_app_run_result_32": {
+            "prov:label": "Action 32 App Result",
+            "prov:type": "prov:Entity",
+            "yprov4wfs:result_summary": "'detect_c2_communication' on asset 'splunk': 1 action succeeded. (1)For Parameter: {\"add_raw_field\":true,\"attach_result\":false,\"command\":\"search\",\"context\":{\"artifact_id\":0,\"guid\":\"cc0fd2ef-e3cc-4917-95fa-71263131ed29\",\"parent_action_run\":[]},\"display\":\"_time,Image,CommandLine\",\"end_time\":\"\",\"parse_only\":false,\"query\":\"index=botsv3 earliest=0 sourcetype=xmlwineventlog | rex field=_raw \\\"<EventID>(?P<EventID>\\\\d+)</EventID>\\\" | rex field=_raw \\\"<Data Name='Image'>(?P<Image>[^<]+)</Data>\\\" | rex field=_raw \\\"<Data Name='CommandLine'>(?P<CommandLine>[^<]+)</Data>\\\" | where EventID=\\\"1\\\" AND like(CommandLine, \\\"%45.77.53.176%\\\") | table _time Image CommandLine | sort _time | head 10\",\"search_mode\":\"smart\",\"start_time\":\"\",\"time_format\":\"\"} Message: \"Sid: 1781531634.57, Total events: 4\""
+        },
+        "soar_action_message_32": {
+            "prov:label": "Action 32 Message",
+            "prov:type": "prov:Entity",
+            "yprov4wfs:message": "1 action succeeded"
+        },
+        "soar_action_input_33": {
+            "prov:label": "Action 33 Input",
+            "prov:type": "prov:Entity",
+            "yprov4wfs:action": "run query",
+            "yprov4wfs:type": "investigate"
+        },
+        "soar_app_run_result_33": {
+            "prov:label": "Action 33 App Result",
+            "prov:type": "prov:Entity",
+            "yprov4wfs:result_summary": "'detect_backdoor_account' on asset 'splunk': 1 action succeeded. (1)For Parameter: {\"add_raw_field\":true,\"attach_result\":false,\"command\":\"search\",\"context\":{\"artifact_id\":0,\"guid\":\"4ed427fd-b8a3-4f5d-b4f1-84fd4e2e0aee\",\"parent_action_run\":[]},\"display\":\"_time,CommandLine\",\"end_time\":\"\",\"parse_only\":false,\"query\":\"index=botsv3 earliest=0 sourcetype=xmlwineventlog | rex field=_raw \\\"<EventID>(?P<EventID>\\\\d+)</EventID>\\\" | rex field=_raw \\\"<Data Name='CommandLine'>(?P<CommandLine>[^<]+)</Data>\\\" | where EventID=\\\"1\\\" AND like(CommandLine, \\\"%useradd%\\\") | table _time CommandLine | sort _time | head 10\",\"search_mode\":\"smart\",\"start_time\":\"\",\"time_format\":\"\"} Message: \"Sid: 1781531650.58, Total events: 2\""
+        },
+        "soar_action_message_33": {
+            "prov:label": "Action 33 Message",
+            "prov:type": "prov:Entity",
+            "yprov4wfs:message": "1 action succeeded"
+        }
+    },
+    "agent": {
+        "splunk_soar_platform": {
+            "prov:label": "Splunk SOAR",
+            "prov:type": "prov:Agent"
+        },
+        "soar_app_Splunk": {
+            "prov:label": "Splunk 3.0.1",
+            "prov:type": "prov:Agent"
+        },
+        "soar_user_soar_local_admin": {
+            "prov:label": "soar_local_admin",
+            "prov:type": "prov:Agent"
+        }
+    },
+    "used": {
+        "4f967a4a-40b8-45a0-93e4-9dd80451ca52": {
+            "prov:activity": "soar_action_run_31",
+            "prov:entity": "soar_action_input_31"
+        },
+        "e8f252fa-6c7d-4b8f-be86-779dd4ea9fdb": {
+            "prov:activity": "soar_action_run_32",
+            "prov:entity": "soar_action_input_32"
+        },
+        "81c51c75-e8f9-499e-a08a-65aded56a07e": {
+            "prov:activity": "soar_action_run_33",
+            "prov:entity": "soar_action_input_33"
+        }
+    },
+    "wasGeneratedBy": {
+        "616c12d7-7ba6-4340-b5ff-b537eaf99ef2": {
+            "prov:entity": "soar_app_run_result_31",
+            "prov:activity": "soar_action_run_31"
+        },
+        "ef68ac2f-4af0-42d6-a52f-8be61fd2791e": {
+            "prov:entity": "soar_action_message_31",
+            "prov:activity": "soar_action_run_31"
+        },
+        "baa1861e-f3eb-4b13-b443-a680b99119fb": {
+            "prov:entity": "soar_app_run_result_32",
+            "prov:activity": "soar_action_run_32"
+        },
+        "678c25cb-e6eb-4f7f-b7fd-6bc8563a3873": {
+            "prov:entity": "soar_action_message_32",
+            "prov:activity": "soar_action_run_32"
+        },
+        "a8b9f8ca-05aa-4b59-a5da-3ef35bcfbaed": {
+            "prov:entity": "soar_app_run_result_33",
+            "prov:activity": "soar_action_run_33"
+        },
+        "3aa0b7de-529e-4e27-a2c8-0c570d90bcf2": {
+            "prov:entity": "soar_action_message_33",
+            "prov:activity": "soar_action_run_33"
+        }
+    },
+    "wasDerivedFrom": {},
+    "wasAssociatedWith": {
+        "35b1875f-b2ec-423c-8af2-7451859844f6": {
+            "prov:activity": "soar_playbook_run_57",
+            "prov:agent": "splunk_soar_platform"
+        },
+        "3efe2602-d7cd-4fd1-be63-2068e595f186": {
+            "prov:activity": "soar_action_run_31",
+            "prov:agent": "soar_app_Splunk"
+        },
+        "59ef44fd-2520-43c1-9cf2-0daaa725a0b0": {
+            "prov:activity": "soar_action_run_32",
+            "prov:agent": "soar_app_Splunk"
+        },
+        "56dafba4-a7f7-47ed-8374-45598805c9f8": {
+            "prov:activity": "soar_action_run_33",
+            "prov:agent": "soar_app_Splunk"
+        }
+    },
+    "wasAttributedTo": {},
+    "actedOnBehalfOf": {
+        "7257ee43-3cbe-42ae-97c3-249576667358": {
+            "prov:delegate": "soar_app_Splunk",
+            "prov:responsible": "soar_user_soar_local_admin"
+        },
+        "a6899aff-b62f-42bd-8e91-5eaa241a08eb": {
+            "prov:delegate": "soar_app_Splunk",
+            "prov:responsible": "soar_user_soar_local_admin"
+        },
+        "13d722b4-4b22-4d03-922a-1965c46de2a4": {
+            "prov:delegate": "soar_app_Splunk",
+            "prov:responsible": "soar_user_soar_local_admin"
+        }
+    },
+    "wasInformedBy": {
+        "dcb7d3dd-07f5-494d-97bf-dab4e72d5bb4": {
+            "prov:informed": "soar_action_run_31",
+            "prov:informant": "soar_playbook_run_57"
+        },
+        "5bcc1468-f32a-493e-8871-b69d83a8cbe2": {
+            "prov:informed": "soar_action_run_32",
+            "prov:informant": "soar_action_run_31"
+        },
+        "229e807e-92e9-4098-8ee3-3f1a85e4d59e": {
+            "prov:informed": "soar_action_run_33",
+            "prov:informant": "soar_action_run_32"
+        }
+    }
+}
