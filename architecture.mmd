@@ -1,0 +1,66 @@
+flowchart TD
+
+    SOAR["🛡️ Splunk SOAR 8.5.0\nSecurity Playbook"]
+    TRIGGER["⚡ pipeline_trigger.py\nFlask · Port 5000\nPOST /trigger"]
+    ORCH["⚙️ run_cyberproof.py\nPipeline Orchestrator"]
+
+    subgraph S1["① Provenance Capture  ·  yProv4WFs SOAR Adapter"]
+        direction LR
+        SOAR_REST["SOAR REST API\ncontainer  ·  playbook_run\naction_run  ·  app_run"]
+        YPROV["W3C PROV-JSON Graph\nEntities  ·  Activities  ·  Agents\nwasInformedBy causal chain"]
+        P_ARTS["📄 PROV-JSON\n🔒 SHA-256 hash\n🖼️ SVG  ·  Graphviz dot"]
+        SOAR_REST --> YPROV --> P_ARTS
+    end
+
+    subgraph S2["② Forensic Enrichment  ·  Splunk MCP Server"]
+        direction LR
+        SPL["Dynamic SPL extraction\nfrom SOAR app_run messages\nno hardcoded queries"]
+        MCP["splunk_run_query\nover SSE"]
+        BOTS["Splunk Enterprise\nBOTS v3 dataset\nAug – Oct 2018"]
+        E_ART["📊 mcp_enrichment_results.json\nAttacker timeline  ·  Affected hosts\nNetwork C2 connections"]
+        SPL --> MCP <-->|SPL queries| BOTS
+        MCP --> E_ART
+    end
+
+    subgraph S3["③ Legal Evidence Generation  ·  SaulLM-7B  (Equall/Saul-7B-Instruct-v1  via Featherless AI)"]
+        direction LR
+        CTX["Compressed incident\ncontext  ≈ 1 200 tokens\nper call"]
+        CALLS["5 independent LLM calls\n① Legal Defensibility\n② Completeness Assessment\n③ Regulatory Compliance\n    NIS2 24h · GDPR 72h · Insurance 48h\n④ Financial Accuracy\n⑤ Claim Approval Likelihood"]
+        QWEN["🔄 Qwen2.5-7B-Instruct\nHF Serverless Inference\nfallback on context overflow"]
+        ASM["Local assembly\n+ Executive Summary\nno extra LLM call"]
+        EV_ART["📝 evidence_package\n.txt  ·  .pdf"]
+        CTX --> CALLS
+        CALLS -. "400 context\noverflow" .-> QWEN
+        CALLS --> ASM --> EV_ART
+    end
+
+    subgraph S4["④ Dashboard & Delivery  ·  Splunk"]
+        direction LR
+        DJSON["📋 cyberproof_dashboard_⟨id⟩.json\nFull structured schema"]
+        HEC["Splunk HEC\nindex = cyberproof\nsourcetype = cyberproof:dashboard"]
+        STUDIO["📊 Dashboard Studio\nRegulatory countdown  ·  Financial impact\nForensics  ·  Provenance hash  ·  SVG"]
+        DJSON -->|HEC POST| HEC --> STUDIO
+    end
+
+    SOAR      -->|"on_finish()  HTTP POST\n{ container_id: N }"| TRIGGER
+    TRIGGER   -->|subprocess| ORCH
+    ORCH      -->|"Step 1"| SOAR_REST
+    ORCH      -->|"Step 2"| SPL
+    ORCH      -->|"Step 3"| CTX
+    ORCH      -->|"Step 4"| DJSON
+
+    classDef splunkRed  fill:#c1121f,color:#fff,stroke:none
+    classDef orange     fill:#d4590a,color:#fff,stroke:none
+    classDef provBlue   fill:#023e8a,color:#fff,stroke:none
+    classDef teal       fill:#007f5f,color:#fff,stroke:none
+    classDef llmGreen   fill:#1a7a4a,color:#fff,stroke:none
+    classDef purple     fill:#5a189a,color:#fff,stroke:none
+    classDef dark       fill:#2b2d42,color:#fff,stroke:none
+
+    class SOAR,HEC,STUDIO splunkRed
+    class TRIGGER orange
+    class SOAR_REST,YPROV,P_ARTS provBlue
+    class SPL,MCP,BOTS,E_ART teal
+    class CTX,CALLS,QWEN,ASM llmGreen
+    class EV_ART,DJSON purple
+    class ORCH dark

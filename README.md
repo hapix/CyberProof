@@ -100,6 +100,8 @@ flowchart TD
     class ORCH dark
 ```
 
+![Architecture Diagram](architecture_diagram.png)
+
 ### Component Roles
 
 | Component | Role |
