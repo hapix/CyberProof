@@ -31,6 +31,10 @@ CyberProof is a fully automated pipeline that transforms a Splunk SOAR playbook 
 
 ## Architecture
 
+![Architecture Diagram](architecture_diagram.png)
+
+### Detailed Architecture
+
 ```mermaid
 flowchart TD
 
@@ -99,8 +103,6 @@ flowchart TD
     class EV_ART,DJSON purple
     class ORCH dark
 ```
-
-![Architecture Diagram](architecture_diagram.png)
 
 ### Component Roles
 
